@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "386320270057",
+    "firebase_url": "https://exson-bank-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "exson-bank",
+    "storage_bucket": "exson-bank.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386320270057:android:51f4eb49540d0b1fcc2678",
+        "android_client_info": {
+          "package_name": "uz.exson.bank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386320270057-vbfprndjob0ahnn95mrpubmsus32bl2g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uz.exson.bank",
+            "certificate_hash": "d8d69689157d914083df176a8dae3d9516c2aa93"
+          }
+        },
+        {
+          "client_id": "386320270057-s57tl4g0d5ago3d5p9i1sj8moq4opdus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE91D-gAL0ehDeZQbvrtXfHem2lIniQ1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386320270057-s57tl4g0d5ago3d5p9i1sj8moq4opdus.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "386320270057-j1qpntitm43ecn7om4b3c80ejhn4c87j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "uz.exson"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"exson-bank","appId":"1:386320270057:android:51f4eb49540d0b1fcc2678","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"exson-bank","configurations":{"android":"1:386320270057:android:51f4eb49540d0b1fcc2678","ios":"1:386320270057:ios:5286d66a6373dcd0cc2678"}}}}}}
