@@ -10,6 +10,7 @@ class AppImages {
   static const String fasebook="assets/icons/fasebook.svg";
   static const String home="assets/icons/home.svg";
   static const String savat="assets/icons/savat.svg";
+  static const String finger="assets/icons/finger.svg";
 
   //.png
   static const String boy = "assets/images/boy.png";

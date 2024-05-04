@@ -133,9 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // ),
                           MyCustomButton(
                             onTap: () {
-                              // context.read<AuthBloc>().add(LoginUserEvent(
-                              //     password: passwordController.text,
-                              //     username: emailController.text));
+
                               context.read<AuthBloc>().add(
                                 LoginUserEvent(
                                   username: emailController.text,

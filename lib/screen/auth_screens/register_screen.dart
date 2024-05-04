@@ -1,16 +1,14 @@
+import 'package:exson_bank/bloc/user_profile/user_profile_bloc.dart';
+import 'package:exson_bank/bloc/user_profile/user_profile_event.dart';
 import 'package:exson_bank/data/model/user_model.dart';
 import 'package:exson_bank/screen/auth_screens/widget/my_custom_buttom/my_custom_button.dart';
 import 'package:exson_bank/screen/auth_screens/widget/password_text_input.dart';
-import 'package:exson_bank/screen/auth_screens/widget/simple_global_button.dart';
-import 'package:exson_bank/screen/auth_screens/widget/snacbar.dart';
 import 'package:exson_bank/screen/auth_screens/widget/universal_text_input.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../bloc/auth/auth_bloc.dart';
 import '../../bloc/auth/auth_event.dart';
 import '../../bloc/auth/auth_state.dart';
@@ -20,7 +18,8 @@ import '../../utils/constants/app_constants.dart';
 import '../../utils/images/app_images.dart';
 import '../../utils/size/size.dart';
 import '../../utils/styles/app_text_style.dart';
-import '../tab/tab_screen.dart';
+import '../lokal_auth/methot_one/set_pin.dart';
+
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -33,38 +32,52 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
 
-  // final ChatServices chatServices = ChatServices();
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  // final TextEditingController emailController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  // final TextEditingController usernameController = TextEditingController();
+  // final TextEditingController phoneController = TextEditingController();
+  // final TextEditingController emailController = TextEditingController();
+  // final TextEditingController lastNameController = TextEditingController();
   // final TextEditingController passwordController = TextEditingController();
+  // final TextEditingController firstNameController = TextEditingController();
+
   UserModel userModel = UserModel.initial();
   bool passwordVisibility = false;
 
-  bool isValidLoginCredentials() =>
-      AppConstants.passwordRegExp.hasMatch(passwordController.text) &&
-      AppConstants.textRegExp.hasMatch(emailController.text) &&
-      AppConstants.phoneRegExp.hasMatch(phoneController.text) &&
-      AppConstants.textRegExp.hasMatch(lastNameController.text);
 
-  // AppConstants.passwordRegExp.hasMatch(confirmPasswordController.text)
-  bool isValidLoginCredentionls() =>
-      AppConstants.passwordRegExp.hasMatch(passwordController.text) &&
-      AppConstants.textRegExp.hasMatch(emailController.text);
+
+  bool get checkInput {
+    return AppConstants.textRegExp.hasMatch(firstNameController.text) &&
+        AppConstants.passwordRegExp.hasMatch(passwordController.text);
+  }
 
   @override
   void dispose() {
-    usernameController.dispose();
     passwordController.dispose();
+    firstNameController.dispose();
+    phoneController.dispose();
+    lastNameController.dispose();
     super.dispose();
   }
 
+
+  bool isValidLoginCredentials() =>
+      AppConstants.passwordRegExp.hasMatch(passwordController.text) &&
+      AppConstants.phoneRegExp.hasMatch(phoneController.text) &&
+      AppConstants.textRegExp.hasMatch(lastNameController.text);
+
+  bool isValidLoginCredentionls() =>
+      AppConstants.passwordRegExp.hasMatch(passwordController.text) &&
+      AppConstants.textRegExp.hasMatch(firstNameController.text);
+
+
+
   final picker = ImagePicker();
   String storagePath = "";
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             labelText: "Your name",
                             errorText: "Ismni to'g'ri  kiriting!",
                             regExp: AppConstants.textRegExp,
-                            controller: usernameController,
+                            controller: lastNameController,
                             iconPath: AppImages.person35,
                             hintText: "Your Name",
                             type: TextInputType.text,
@@ -115,8 +128,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           SizedBox(height: 8.h),
                           UniversalTextField(
                             errorText: "Emailni to'g'ri  kiriting!",
-                            regExp: AppConstants.emailRegExp,
-                            controller: emailController,
+                            regExp: AppConstants.textRegExp,
+                            controller: firstNameController,
                             iconPath: AppImages.sms,
                             hintText: "Email",
                             type: TextInputType.emailAddress,
@@ -139,93 +152,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           SizedBox(height: 24.h),
-                          // SimpleGlobalButton(
-                          //   // onTap: () {
-                          //   //   // if (emailController.text
-                          //   //   //     .contains('@gmail.com')) {
-                          //   //   //   context.read<AuthBloc>().add(
-                          //   //   //         AuthRegisterEvent(
-                          //   //   //           name: usernameController.text,
-                          //   //   //           email: emailController.text,
-                          //   //   //           password: passwordController.text,
-                          //   //   //         ),
-                          //   //   //       );
-                          //   //   // }
-                          //   //
-                          //   //
-                          //   //   // if (usernameController.text.isEmpty &&
-                          //   //   //     emailController.text.isEmpty &&
-                          //   //   //     passwordController.text.isEmpty) {
-                          //   //   //   showCustomSnackbar(
-                          //   //   //       context, 'Malumotlarni toildir');
-                          //   //   // } else if (emailController.text
-                          //   //   //     .contains('@gmail.com')) {
-                          //   //   //   context.read<AuthBloc>().add(
-                          //   //   //         AuthRegisterEvent(
-                          //   //   //           name: usernameController.text,
-                          //   //   //           email: emailController.text,
-                          //   //   //           password: passwordController.text,
-                          //   //   //         ),
-                          //   //   //       );
-                          //   //   // } else {
-                          //   //   //   showCustomSnackbar(context, 'Email is error');
-                          //   //   // }
-                          //   // },
-                          //   onTap: () {
-                          //     context.read<AuthBloc>().add(
-                          //           RegisterUserEvent(
-                          //             userModel: UserModel(
-                          //               password: passwordController.text,
-                          //               email:
-                          //                   "${emailController.text}@gmail.com"
-                          //                       .trim(),
-                          //               imageUrl: "",
-                          //               phoneNumber: phoneController.text,
-                          //               userId: "",
-                          //               userName: emailController.text,
-                          //               lastName: lastNameController.text,
-                          //             ),
-                          //           ),
-                          //         );
-                          //   },
-                          //   title: "REGISTER",
-                          //   horizontalPadding: 0,
-                          //   verticalPadding: 0,
-                          // ),
                           MyCustomButton(
                             onTap: () {
-                              // context.read<AuthBloc>().add(
-                              //       RegisterUserEvent(
-                              //         userModel: UserModel(
-                              //             password: passwordController.text,
-                              //             email:
-                              //                 "${emailController.text}@gmail.com"
-                              //                     .trim(),
-                              //             imageUrl: "",
-                              //             phoneNumber: phoneController.text,
-                              //             userId: "",
-                              //             userName: emailController.text,
-                              //             lastName: lastNameController.text,
-                              //             fcm: '',
-                              //             authUid: ''),
-                              //       ),
-                              //     );
                               context.read<AuthBloc>().add(
-                                RegisterUserEvent(
-                                  userModel: UserModel(
-                                    imageUrl: "",
-                                    email:
-                                    "${firstNameController.text.toLowerCase()}@gmail.com",
-                                    lastName: lastNameController.text,
-                                    password: passwordController.text,
-                                    phoneNumber: phoneController.text,
-                                    userId: "",
-                                    userName: firstNameController.text,
-                                    fcm: "",
-                                    authUid: "", 
-                                  ),
-                                ),
-                              );
+                                    RegisterUserEvent(
+                                      userModel: UserModel(
+                                        imageUrl: "",
+                                        email:
+                                            "${firstNameController.text.toLowerCase()}@gmail.com",
+                                        lastName: lastNameController.text,
+                                        password: passwordController.text,
+                                        phoneNumber: phoneController.text,
+                                        userId: "",
+                                        userName: firstNameController.text,
+                                        fcm: "",
+                                        authUid: "",
+                                      ),
+                                    ),
+                                  );
                             },
                             readyToSubmit: isValidLoginCredentionls(),
                             isLoading: state.formStatus == FormStatus.loading,
@@ -239,26 +183,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               const Spacer(),
                               IconButton(
                                 onPressed: () {
-                                  context
-                                      .read<AuthBloc>()
-                                      .add(SignInWithGoogleEvent(userModel: UserModel.initial()));
+                                  context.read<AuthBloc>().add(
+                                      SignInWithGoogleEvent(
+                                          userModel: UserModel.initial()));
                                 },
                                 icon: SvgPicture.asset(AppImages.google),
                               ),
                               const Text("Register with Google"),
                               const Spacer()
-
-                              // const Spacer(),
-                              // IconButton(
-                              //   onPressed: () {},
-                              //   icon: SvgPicture.asset(AppImages.fasebook),
-                              // ),
-                              // const Spacer(),
-                              // IconButton(
-                              //   onPressed: () {},
-                              //   icon: SvgPicture.asset(AppImages.iphone),
-                              // ),
-                              // const Spacer(),
                             ],
                           ),
                         ],
@@ -298,14 +230,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           );
         },
+        // listener: (BuildContext context, AuthState state) {
+        //   if (state.formStatus == FormStatus.authenticated) {
+        //     if (state.statusMessage == "registered") {
+        //       context.read<UserProfileBloc>().add(
+        //         AddUserEvent(
+        //           userModel: state.userModel,
+        //         ),
+        //       );
+        //     }
+        //     BlocProvider.of<UserProfileBloc>(context).add(
+        //       GetCurrentUserEvent(
+        //         uid: FirebaseAuth.instance.currentUser!.uid,
+        //       ),
+        //     );
+        //     Navigator.pushReplacement(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => const TabScreen(),
+        //       ),
+        //     );
+        //   }
+        // },
         listener: (BuildContext context, AuthState state) {
-          if (state.formStatus == FormStatus.error) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          if (state.formStatus == FormStatus.authenticated) {
+            if (state.statusMessage == "registered") {
+              context.read<UserProfileBloc>().add(
+                    AddUserEvent(
+                      userModel: state.userModel,
+                    ),
+                  );
+            }
+            BlocProvider.of<UserProfileBloc>(context).add(
+              GetCurrentUserEvent(
+                uid: FirebaseAuth.instance.currentUser!.uid,
+              ),
+            );
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const TabScreen(),
+                builder: (context) => const PinScreen(),
               ),
             );
           }
@@ -314,101 +278,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
-
-List<String> kod = ["@gmail.com", "@gmail.ru"];
-
-String a = "@gmail.com";
-
-//creat images
-
-//
-//   Future<void> _getImageFromCamera() async {
-//     XFile? image = await picker.pickImage(
-//       source: ImageSource.camera,
-//       maxHeight: 1024,
-//       maxWidth: 1024,
-//     );
-//     if (image != null && context.mounted) {
-//       debugPrint("IMAGE PATH:${image.path}");
-//       storagePath = "files/images/${image.name}";
-//       imageUrl = await
-//
-//       // context.read<ImageViewModel>().uploadImage(
-//       //       pickedFile: image,
-//       //       storagePath: storagePath,
-//       //     );
-//
-//       chatServices.uploadImage(pickedFile: image, storagePath: storagePath);
-//
-//       debugPrint("DOWNLOAD URL:$imageUrl");
-//     }
-//   }
-//
-//   Future<void> _getImageFromGallery() async {
-//     XFile? image = await picker.pickImage(
-//       source: ImageSource.gallery,
-//       maxHeight: 1024,
-//       maxWidth: 1024,
-//     );
-//     if (image != null && context.mounted) {
-//       debugPrint("IMAGE PATH:${image.path}");
-//       storagePath = "files/images/${image.name}";
-//       imageUrl = await
-//
-//       // await context.read<ImageViewModel>().uploadImage(
-//       //       pickedFile: image,
-//       //       storagePath: storagePath,
-//       //     );
-//       chatServices.uploadImage(pickedFile: image, storagePath: storagePath);
-//
-//       debugPrint("DOWNLOAD URL:$imageUrl");
-//     }
-//   }
-//
-//   takeAnImage() {
-//     showModalBottomSheet(
-//         shape: const RoundedRectangleBorder(
-//             borderRadius: BorderRadius.only(
-//           topLeft: Radius.circular(16),
-//           topRight: Radius.circular(16),
-//         )),
-//         context: context,
-//         builder: (context) {
-//           return Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               SizedBox(height: 12.h),
-//               ListTile(
-//                 onTap: () async {
-//                   _getImageFromGallery();
-//                   Navigator.pop(context);
-//                 },
-//                 leading: const Icon(Icons.photo_album_outlined),
-//                 title: const Text("Gallereyadan olish"),
-//               ),
-//               ListTile(
-//                 onTap: () async {
-//                   _getImageFromCamera();
-//                   Navigator.pop(context);
-//                 },
-//                 leading: const Icon(Icons.camera_alt),
-//                 title: const Text("Kameradan olish"),
-//               ),
-//               SizedBox(height: 24.h),
-//             ],
-//           );
-//         });
-//   }
-//
-//   _showSnackBar({String title = "Empty input"}) {
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(
-//         duration: const Duration(seconds: 1),
-//         content: Text(
-//           title,
-//           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.sp),
-//         ),
-//       ),
-//     );
-//   }
-// }

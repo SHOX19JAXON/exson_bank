@@ -1,17 +1,12 @@
-import 'package:exson_bank/app/app.dart';
 import 'package:exson_bank/bloc/auth/auth_bloc.dart';
 import 'package:exson_bank/bloc/auth/auth_state.dart';
 import 'package:exson_bank/data/locol/storage_reposirory.dart';
 import 'package:exson_bank/data/model/forma_stats.dart';
-import 'package:exson_bank/screen/routs.dart';
 import 'package:exson_bank/utils/colors/app_colors.dart';
 import 'package:exson_bank/utils/images/app_images.dart';
-import 'package:exson_bank/utils/styles/app_text_style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../bloc/user_profile/user_profile_bloc.dart';
 import '../../bloc/user_profile/user_profile_event.dart';
 import '../../utils/size/size.dart';
@@ -136,7 +131,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 uid: FirebaseAuth.instance.currentUser!.uid,
               ),
             );
-
             _init(true);
           } else {
             _init(false);

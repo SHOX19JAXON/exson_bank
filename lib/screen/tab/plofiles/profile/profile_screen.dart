@@ -1,4 +1,5 @@
 
+import 'package:exson_bank/utils/images/app_images.dart';
 import 'package:exson_bank/utils/size/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,8 +59,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           width: 120.w,
                           height: 120.h,
                           decoration: BoxDecoration(
-                            color: Colors.grey,
+
                             borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.asset(AppImages.person45),
                           ),
                         ),
                       ),
@@ -117,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 25.getH(),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 35.w),
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -152,6 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                       ),
+                     
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 15.w,
