@@ -132,23 +132,7 @@ class AuthRepository {
         password: password,
       );
 
-      // FirebaseFirestore.instance
-      //     .collection('users')
-      //     .doc(userCredential.user!.uid)
-      //     .set(
-      //   {
-      //     "uuid": userCredential.user!.uid,
-      //     "username": username,
-      //     "passwordName": password,
-      //     "lastName": "",
-      //     "userId": "",
-      //     "phoneNumber": "",
-      //     "imageUrl": "",
-      //   },
-      //   SetOptions(
-      //     merge: true,
-      //   ),
-      // );
+
 
       return NetworkResponse(data: userCredential);
     } on FirebaseAuthException catch (e) {

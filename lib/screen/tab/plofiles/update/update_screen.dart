@@ -1,15 +1,13 @@
-
 import 'package:exson_bank/bloc/auth/auth_bloc.dart';
 import 'package:exson_bank/bloc/auth/auth_event.dart';
-import 'package:exson_bank/screen/auth_screens/login_screen.dart';
-import 'package:exson_bank/screen/auth_screens/register_screen.dart';
-import 'package:exson_bank/screen/splash/splash.dart';
+import 'package:exson_bank/data/model/forma_stats.dart';
+import 'package:exson_bank/screen/routs.dart';
 import 'package:exson_bank/screen/tab/plofiles/update/widget/text_filetI_tms.dart';
 import 'package:exson_bank/utils/images/app_images.dart';
 import 'package:exson_bank/utils/size/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../../bloc/auth/auth_state.dart';
 import '../../../../bloc/user_profile/user_profile_bloc.dart';
 import '../../../../bloc/user_profile/user_profile_event.dart';
 import '../../../../bloc/user_profile/user_profile_state.dart';
@@ -30,7 +28,6 @@ class _UpdateScreenState extends State<UpdateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: BlocBuilder<UserProfileBloc, UserProfileState>(
         builder: (context, state) {
           return Padding(
@@ -52,7 +49,6 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   Center(
                     child: Container(
                       decoration: BoxDecoration(
-
                         borderRadius: BorderRadius.circular(100),
                       ),
                       width: 120.w,
@@ -139,10 +135,10 @@ class _UpdateScreenState extends State<UpdateScreen> {
                             passwordName: passwordController.text,
                           );
                           context.read<UserProfileBloc>().add(
-                            UpdateUserEvent(
-                              userModel: userModel,
-                            ),
-                          );
+                                UpdateUserEvent(
+                                  userModel: userModel,
+                                ),
+                              );
                           Navigator.pop(context);
                         }
                       },
@@ -156,27 +152,32 @@ class _UpdateScreenState extends State<UpdateScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.h,),
-                  Container(
-
-                    decoration: BoxDecoration(
-                       border: Border.all(
-                         width: 1,
-                         color: AppColors.c_090F47
-                       ),
-                      borderRadius: BorderRadius.circular(10),
-                      // color: AppColors.c_090F47.withOpacity(0.5),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  BlocListener<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state.formStatus == FormStatus.unauthenticated) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, RouteNames.authRoute, (route) => false);
+                      }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: AppColors.c_090F47),
+                        borderRadius: BorderRadius.circular(10),
+                        // color: AppColors.c_090F47.withOpacity(0.5),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          context.read<AuthBloc>().add(LogOutEvent());
+                        },
+                        child: const Text(
+                          "Log Out",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
                     ),
-                    child: TextButton(onPressed: (){
-                      context.read<AuthBloc>().add(
-                        LogOutEvent()
-                      );
-                      Navigator.push(context,MaterialPageRoute(builder: (context){
-                        return const SplashScreen();
-                      }));
-                    }, child: const Text("Log Out",style: TextStyle(
-                      color: Colors.red
-                    ),),),
                   ),
                   20.getH(),
                 ],
@@ -188,6 +189,3 @@ class _UpdateScreenState extends State<UpdateScreen> {
     );
   }
 }
-
-
-

@@ -82,16 +82,14 @@
 //
 //
 //
-
-
-
 import 'package:exson_bank/utils/images/app_images.dart';
 import 'package:exson_bank/utils/size/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../utils/colors/app_colors.dart';
+import '../../tab/tab_screen.dart';
+import '../local_auth.dart';
 import 'cubit/passwor_cubit.dart';
 import 'cubit/password_state.dart';
 
@@ -103,6 +101,25 @@ class PinScreen extends StatefulWidget {
 }
 
 class _PinScreenState extends State<PinScreen> {
+  bool auth = false;
+
+  _init() async {
+    final authenticated = await LocalAuth.authenticate();
+    setState(
+      () {
+        auth = authenticated;
+      },
+    );
+    if (auth)  {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const TabScreen(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -241,16 +258,16 @@ class _PinScreenState extends State<PinScreen> {
                         children: [
                           ...List.generate(
                             4,
-                                (index) => Container(
+                            (index) => Container(
                               margin: EdgeInsets.symmetric(horizontal: 12.w),
                               width: 15.w,
                               height: 15.h,
                               decoration: BoxDecoration(
                                 color: index < state.password.length
                                     ? state.passwordStatus ==
-                                    PasswordStatus.error
-                                    ? Colors.red
-                                    : Colors.green
+                                            PasswordStatus.error
+                                        ? Colors.red
+                                        : Colors.green
                                     : AppColors.c_415A93.withOpacity(0.5),
                                 shape: BoxShape.circle,
                               ),
@@ -291,21 +308,22 @@ class _PinScreenState extends State<PinScreen> {
                         children: [
                           Container(
                             padding: EdgeInsets.symmetric(
-                                  horizontal: 8.w,
-                                  vertical: 8.h,
-                                ),
+                              horizontal: 8.w,
+                              vertical: 8.h,
+                            ),
                             decoration: BoxDecoration(
-
                               borderRadius: BorderRadius.circular(100),
                               color: AppColors.c_090F47,
                             ),
                             child: IconButton(
-
-                              onPressed: () {},
-                              icon: SizedBox(width: 50,height: 50,
-                                  child: SvgPicture.asset(AppImages.finger,color: Colors.white))
-
-                            ),
+                                onPressed: () {
+                                  _init();
+                                },
+                                icon: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: SvgPicture.asset(AppImages.finger,
+                                         color: Colors.white))),
                           ),
                           buttonItems(title: "0"),
                           TextButton(

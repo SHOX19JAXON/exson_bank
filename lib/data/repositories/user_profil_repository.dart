@@ -27,10 +27,7 @@ class UserProfileRepository {
             .then((docRef) {
           docRef.update({"userId": docRef.id});
         });
-        // await FirebaseFirestore.instance
-        //     .collection('users')
-        //     .doc(documentReference.id)
-        //     .update({"userId": documentReference.id});
+
       }
       return NetworkResponse(data: "success");
     } on FirebaseException catch (error) {

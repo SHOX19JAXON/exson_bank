@@ -2,6 +2,7 @@ import 'package:exson_bank/bloc/auth/auth_bloc.dart';
 import 'package:exson_bank/bloc/auth/auth_state.dart';
 import 'package:exson_bank/data/locol/storage_reposirory.dart';
 import 'package:exson_bank/data/model/forma_stats.dart';
+import 'package:exson_bank/screen/lokal_auth/methot_one/set_pin.dart';
 import 'package:exson_bank/utils/colors/app_colors.dart';
 import 'package:exson_bank/utils/images/app_images.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -110,7 +111,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const TabScreen(),
+          builder: (context) => const PinScreen(),
         ),
       );
     }

@@ -95,7 +95,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     NetworkResponse networkResponse = await authRepository.logOutUser();
 
     if (networkResponse.errorText.isEmpty) {
-      emit(state.copyWith(formStatus: FormStatus.authenticated));
+      emit(state.copyWith(formStatus: FormStatus.unauthenticated));
     } else {
       emit(
         state.copyWith(
