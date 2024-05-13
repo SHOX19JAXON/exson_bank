@@ -28,10 +28,15 @@ class AppImages {
   static const String on_boarding_2 = "assets/images/on_boarding_2.png";
   static const String on_boarding_3 = "assets/images/on_boarding_3.png";
   static const String person45 = "assets/images/person45.png";
-  // static const String exson_bank = "assets/images/exson_bank.png";
+
   static const String exson_bank = "assets/images/exson_bank.png";
-  static const String chip = "assets/images/chip.png";
+  static const String chip2 = "assets/images/chip.png";
   static const String ipak_yoli = "assets/images/ipak_yoli.png";
+  static const String humo = "assets/images/humo.png";
+  static const String visa = "assets/images/visa.png";
+  static const String chip = "assets/images/chip.png";
+  static const String uzCard = "assets/images/uzcard.png";
+
 
 
 }

@@ -51,13 +51,13 @@ class AuthState extends Equatable {
 
   final String errorMessage;
   final String statusMessage;
-  final FormStatus formStatus;
+  final FormsStatus formStatus;
   final UserModel userModel;
 
   AuthState copyWith({
     String? errorMessage,
     String? statusMessage,
-    FormStatus? formStatus,
+    FormsStatus? formStatus,
     UserModel? userModel,
   }) {
     return AuthState(

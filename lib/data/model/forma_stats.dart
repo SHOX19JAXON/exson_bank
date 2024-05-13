@@ -1,4 +1,4 @@
-enum FormStatus{
+enum FormsStatus{
 
   pure,
   success,

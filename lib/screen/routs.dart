@@ -2,6 +2,7 @@ import 'package:exson_bank/screen/no_internet/no_internet.dart';
 import 'package:exson_bank/screen/on_bording/on_bording.dart';
 import 'package:exson_bank/screen/paymaent/paymey_screen.dart';
 import 'package:exson_bank/screen/splash/splash.dart';
+import 'package:exson_bank/screen/tab/card/add_card_screen2.dart';
 import 'package:exson_bank/screen/tab/card/add_screen/add_screen.dart';
 import 'package:exson_bank/screen/tab/tab_screen.dart';
 import 'package:exson_bank/screen/transfer/transfer_screen.dart';
@@ -36,6 +37,9 @@ class AppRoutes {
       case RouteNames.addCardScreen:
         return navigate(const AddCardScreen());
 
+      case RouteNames.addCardRoute:
+        return navigate(const AddCardScreen());
+
       default:
         return navigate(
           const Scaffold(
@@ -61,4 +65,6 @@ class RouteNames {
   static const String transferRoute = "/transfer_route";
   static const String onBoardingRoute = "/on_boarding_route";
   static const String addCardScreen = "/add_card_screen";
+
+  static const String addCardRoute = "/add_card_route";
 }

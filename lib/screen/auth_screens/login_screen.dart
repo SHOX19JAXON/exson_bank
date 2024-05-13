@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                             },
                             readyToSubmit: isValidLoginCredentionls(),
-                            isLoading: state.formStatus == FormStatus.loading,
+                            isLoading: state.formStatus == FormsStatus.loading,
                             title: "Log In",
                           ),
                           SizedBox(
@@ -216,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         },
         listener: (BuildContext context, AuthState state) {
-          if (state.formStatus == FormStatus.error) {
+          if (state.formStatus == FormsStatus.error) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.errorMessage)));
             // Navigator.pushReplacement(
@@ -227,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
             // );
           }
 
-          if (state.formStatus == FormStatus.authenticated) {
+          if (state.formStatus == FormsStatus.authenticated) {
             if (state.statusMessage == "registered") {
               //TODU USER MALUMOTLARI
               //state.userModel

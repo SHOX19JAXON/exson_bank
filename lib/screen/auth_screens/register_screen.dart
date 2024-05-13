@@ -172,7 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   );
                             },
                             readyToSubmit: isValidLoginCredentionls(),
-                            isLoading: state.formStatus == FormStatus.loading,
+                            isLoading: state.formStatus == FormsStatus.loading,
                             title: 'REGISTER',
                           ),
                           SizedBox(
@@ -253,7 +253,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         //   }
         // },
         listener: (BuildContext context, AuthState state) {
-          if (state.formStatus == FormStatus.authenticated) {
+          if (state.formStatus == FormsStatus.authenticated) {
             if (state.statusMessage == "registered") {
               context.read<UserProfileBloc>().add(
                     AddUserEvent(

@@ -157,7 +157,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   ),
                   BlocListener<AuthBloc, AuthState>(
                     listener: (context, state) {
-                      if (state.formStatus == FormStatus.unauthenticated) {
+                      if (state.formStatus == FormsStatus.unauthenticated) {
                         Navigator.pushNamedAndRemoveUntil(
                             context, RouteNames.authRoute, (route) => false);
                       }

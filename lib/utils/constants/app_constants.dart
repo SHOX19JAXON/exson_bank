@@ -10,20 +10,25 @@ class AppConstants {
 
 
 
-  static String baseUrl = "crudapi.co.uk";
-  static String token = "0c4BHcTzI1QLQUfpDiw7CjMtk2-sJLbOOv0ZOHbOkOoCBweFrQ";
 
-  static String users ="";
-  static String cards ="";
+  static String userst ="";
+  static String cardst ="";
+  static String users = "users";
+  static String cards = "cards";
+  static String history45 = "history45";
+  static String history2 = "history2";
+  static String histories = "histories";
+
   static String cards_database ="cards_database";
+  static String cardsDatabase = "cards_database";
 
-  static String clientID = "699471060311-boktfei0alnfbjc140gako8vvncn4opj.apps.googleusercontent.com";
+  // static String clientID = "699471060311-boktfei0alnfbjc140gako8vvncn4opj.apps.googleusercontent.com";
 
   static String categories = "categories";
   static String products = "products";
-  static String key = "AAAAOKNFCyo:APA91bEIciPPkY3Jyx2rGA27tgZrcqQpeUL-_EvpreX-m9j5cCOYrykcF7IQBkBq8EcLS_46YmyP5plH4ZYwb-7_A0j4uFXXuB09q1KwJ2MiLYrosIzg861JuiI44_DjR0nkC-2SdMlN";
+
   static bool malumot = true;
-  static String defoltFoto = "https://static.vecteezy.com/system/resources/previews/000/662/702/original/vector-man-face-cartoon.jpg";
+
 }
 
 

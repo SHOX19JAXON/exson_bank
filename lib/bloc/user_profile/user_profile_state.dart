@@ -12,13 +12,13 @@ class UserProfileState extends Equatable {
         required this.statusMessage});
 
   final UserModel userModel;
-  final FormStatus formStatus;
+  final FormsStatus formStatus;
   final String errorMessage;
   final String statusMessage;
 
   UserProfileState copyWith({
     UserModel? userModel,
-    FormStatus? formStatus,
+    FormsStatus? formStatus,
     String? errorMessage,
     String? statusMessage,
   }) {

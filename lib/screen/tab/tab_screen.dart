@@ -1,31 +1,20 @@
-//
-// import 'package:flutter/material.dart';
-//
-// class TabScreen extends StatefulWidget {
-//   const TabScreen({super.key});
-//
-//   @override
-//   State<TabScreen> createState() => _TabScreenState();
-// }
-//
-// class _TabScreenState extends State<TabScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("TAB"),
-//       ),
-//     );
-//   }
-// }
+
+import 'package:exson_bank/bloc/card_bloc/card2_bloc.dart';
+import 'package:exson_bank/bloc/history/history_bloc.dart';
 import 'package:exson_bank/screen/tab/plofiles/profile/profile_screen.dart';
 import 'package:exson_bank/utils/size/size.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../bloc/history/history_event.dart';
+import '../../bloc/transaction/transaction_bloc.dart';
 import '../../utils/colors/app_colors.dart';
+import '../routs.dart';
 import 'card/card_screen.dart';
+import 'card/card_screen2.dart';
 import 'history/history_screen.dart';
 import 'home/home_screen.dart';
 
@@ -43,8 +32,9 @@ class _TabScreenState extends State<TabScreen> {
   @override
   void initState() {
     _screens = [
-      const HomeScreen(),
+
       const CardScreen(),
+      const HomeScreen(),
       const HistoryScreen(),
       const ProfileScreen(),
     ];
@@ -70,19 +60,7 @@ class _TabScreenState extends State<TabScreen> {
         unselectedFontSize: 14,
         backgroundColor: AppColors.c_2C2C73,
         items: const [
-          BottomNavigationBarItem(
-            activeIcon: Icon(
-              Icons.home,
-              color: AppColors.white,
-              size: 40,
-            ),
-            icon: Icon(
-              Icons.home,
-              color: AppColors.black,
-              size: 40,
-            ),
-            label: "Home",
-          ),
+
           BottomNavigationBarItem(
             activeIcon: Icon(
               Icons.credit_card,
@@ -95,6 +73,19 @@ class _TabScreenState extends State<TabScreen> {
               size: 40,
             ),
             label: "Card",
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.home,
+              color: AppColors.white,
+              size: 40,
+            ),
+            icon: Icon(
+              Icons.home,
+              color: AppColors.black,
+              size: 40,
+            ),
+            label: "Home",
           ),
           BottomNavigationBarItem(
             activeIcon: Icon(
@@ -141,30 +132,11 @@ class _TabScreenState extends State<TabScreen> {
         child: FloatingActionButton(
           backgroundColor: AppColors.c_7A7AFD,
           onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) {
-            //       return QrScannerScreen(
-            //         barcode: (barcode) {
-            //           ScaffoldMessenger.of(context).showSnackBar(
-            //             SnackBar(
-            //               content: Text(barcode.code.toString()),
-            //             ),
-            //           );
-            //           context.read<ScannerBloc>().add(
-            //             AddScannerEvent(
-            //               scannerModel: ScannerModel(
-            //                 name: "Data",
-            //                 qrCode: barcode.code.toString(),
-            //               ),
-            //             ),
-            //           );
-            //         },
-            //       );
-            //     },
-            //   ),
-            // );
+
+            context.read<TransactionBloc>().add(SetInitialEvent());
+            Navigator.pushNamed(context, RouteNames.transferRoute);
+
+
           },
           child: Icon(
             Icons.transform,

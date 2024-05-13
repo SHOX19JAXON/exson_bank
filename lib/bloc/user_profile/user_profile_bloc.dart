@@ -12,7 +12,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   UserProfileBloc({required this.userProfileRepository})
       : super(UserProfileState(
     userModel: UserModel.initial(),
-    formStatus: FormStatus.pure,
+    formStatus: FormsStatus.pure,
     errorMessage: "",
     statusMessage: "",
   )) {
@@ -26,7 +26,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   final UserProfileRepository userProfileRepository;
 
   _addUser(AddUserEvent event, emit) async {
-    emit(state.copyWith(formStatus: FormStatus.loading));
+    emit(state.copyWith(formStatus: FormsStatus.loading));
 
     NetworkResponse networkResponse =
     await userProfileRepository.addUser(event.userModel);
@@ -34,20 +34,20 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     if (networkResponse.errorText.isEmpty) {
       emit(
         state.copyWith(
-          formStatus: FormStatus.success,
+          formStatus: FormsStatus.success,
           userModel: event.userModel,
         ),
       );
     } else {
       emit(state.copyWith(
         statusMessage: networkResponse.errorCode,
-        formStatus: FormStatus.error,
+        formStatus: FormsStatus.error,
       ));
     }
   }
 
   _updateUser(UpdateUserEvent event, emit) async {
-    emit(state.copyWith(formStatus: FormStatus.loading));
+    emit(state.copyWith(formStatus: FormsStatus.loading));
 
     NetworkResponse networkResponse =
     await userProfileRepository.updateUser(event.userModel);
@@ -55,20 +55,20 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     if (networkResponse.errorText.isEmpty) {
       emit(
         state.copyWith(
-          formStatus: FormStatus.success,
+          formStatus: FormsStatus.success,
           userModel: event.userModel,
         ),
       );
     } else {
       emit(state.copyWith(
         statusMessage: networkResponse.errorCode,
-        formStatus: FormStatus.error,
+        formStatus: FormsStatus.error,
       ));
     }
   }
 
   _deleteUser(DeleteUserEvent event, emit) async {
-    emit(state.copyWith(formStatus: FormStatus.loading));
+    emit(state.copyWith(formStatus: FormsStatus.loading));
 
     NetworkResponse networkResponse =
     await userProfileRepository.deleteUser(event.userModel.userId);
@@ -76,20 +76,20 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     if (networkResponse.errorText.isEmpty) {
       emit(
         state.copyWith(
-          formStatus: FormStatus.success,
+          formStatus: FormsStatus.success,
           userModel: UserModel.initial(),
         ),
       );
     } else {
       emit(state.copyWith(
         statusMessage: networkResponse.errorCode,
-        formStatus: FormStatus.error,
+        formStatus: FormsStatus.error,
       ));
     }
   }
 
   _getUserByDocId(GetUserByDocIdEvent event, emit) async {
-    emit(state.copyWith(formStatus: FormStatus.loading));
+    emit(state.copyWith(formStatus: FormsStatus.loading));
 
     NetworkResponse networkResponse =
     await userProfileRepository.getUserByDocId(event.docId);
@@ -97,7 +97,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     if (networkResponse.errorText.isEmpty) {
       emit(
         state.copyWith(
-          formStatus: FormStatus.success,
+          formStatus: FormsStatus.success,
           userModel: networkResponse.data as UserModel,
         ),
       );
@@ -105,14 +105,14 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
       emit(
         state.copyWith(
           statusMessage: networkResponse.errorCode,
-          formStatus: FormStatus.error,
+          formStatus: FormsStatus.error,
         ),
       );
     }
   }
 
   _getUser(GetCurrentUserEvent event, emit) async {
-    emit(state.copyWith(formStatus: FormStatus.loading));
+    emit(state.copyWith(formStatus: FormsStatus.loading));
 
     NetworkResponse networkResponse =
     await userProfileRepository.getUserByUid(event.uid);
@@ -120,7 +120,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     if (networkResponse.errorText.isEmpty) {
       emit(
         state.copyWith(
-          formStatus: FormStatus.success,
+          formStatus: FormsStatus.success,
           userModel: networkResponse.data as UserModel,
         ),
       );
@@ -128,7 +128,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
       emit(
         state.copyWith(
           statusMessage: networkResponse.errorCode,
-          formStatus: FormStatus.error,
+          formStatus: FormsStatus.error,
         ),
       );
     }

@@ -16,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthState(
       errorMessage: "",
       statusMessage: "",
-      formStatus: FormStatus.pure,
+      formStatus: FormsStatus.pure,
       userModel: UserModel.initial(),
     ),
   ) {
@@ -28,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _loginUser(LoginUserEvent event, emit) async {
-    emit(state.copyWith(formStatus: FormStatus.loading));
+    emit(state.copyWith(formStatus: FormsStatus.loading));
 
     NetworkResponse networkResponse =
     await authRepository.loginWithEmailAndPassword(
@@ -37,11 +37,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
 
     if (networkResponse.errorText.isEmpty) {
-      emit(state.copyWith(formStatus: FormStatus.authenticated));
+      emit(state.copyWith(formStatus: FormsStatus.authenticated));
     } else {
       emit(
         state.copyWith(
-          formStatus: FormStatus.error,
+          formStatus: FormsStatus.error,
           errorMessage: networkResponse.errorText,
         ),
       );
@@ -52,14 +52,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
-      emit(state.copyWith(formStatus: FormStatus.unauthenticated));
+      emit(state.copyWith(formStatus: FormsStatus.unauthenticated));
     } else {
-      emit(state.copyWith(formStatus: FormStatus.authenticated));
+      emit(state.copyWith(formStatus: FormsStatus.authenticated));
     }
   }
 
   _registerUser(RegisterUserEvent event, emit) async {
-    emit(state.copyWith(formStatus: FormStatus.loading));
+    emit(state.copyWith(formStatus: FormsStatus.loading));
 
     NetworkResponse networkResponse =
     await authRepository.registerWithEmailAndPassword(
@@ -74,7 +74,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       event.userModel.copyWith(authUid: userCredential.user!.uid);
       emit(
         state.copyWith(
-          formStatus: FormStatus.authenticated,
+          formStatus: FormsStatus.authenticated,
           statusMessage: "registered",
           userModel: userModel,
         ),
@@ -82,7 +82,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       emit(
         state.copyWith(
-          formStatus: FormStatus.error,
+          formStatus: FormsStatus.error,
           errorMessage: networkResponse.errorText,
         ),
       );
@@ -90,16 +90,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   _logOutUser(LogOutEvent event, emit) async {
-    emit(state.copyWith(formStatus: FormStatus.loading));
+    emit(state.copyWith(formStatus: FormsStatus.loading));
 
     NetworkResponse networkResponse = await authRepository.logOutUser();
 
     if (networkResponse.errorText.isEmpty) {
-      emit(state.copyWith(formStatus: FormStatus.unauthenticated));
+      emit(state.copyWith(formStatus: FormsStatus.unauthenticated));
     } else {
       emit(
         state.copyWith(
-          formStatus: FormStatus.error,
+          formStatus: FormsStatus.error,
           errorMessage: networkResponse.errorText,
         ),
       );
@@ -107,14 +107,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   _googleSigIn(SignInWithGoogleEvent event, emit) async {
-    emit(state.copyWith(formStatus: FormStatus.loading));
+    emit(state.copyWith(formStatus: FormsStatus.loading));
     NetworkResponse networkResponse = await authRepository.googleSignIn();
 
     if (networkResponse.errorText.isEmpty) {
       UserCredential userCredential = networkResponse.data;
       emit(
         state.copyWith(
-          formStatus: FormStatus.authenticated,
+          formStatus: FormsStatus.authenticated,
           userModel: UserModel(
             imageUrl: userCredential.user!.photoURL ?? "",
             email: userCredential.user!.email ?? "",
@@ -131,7 +131,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       emit(
         state.copyWith(
-          formStatus: FormStatus.error,
+          formStatus: FormsStatus.error,
           errorMessage: networkResponse.errorText,
         ),
       );
